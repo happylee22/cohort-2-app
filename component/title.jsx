@@ -8,7 +8,7 @@ export const Title = ({ text }) => {
 const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
-    fontSize: scaleFontSize(25),
+    fontSize: scaleFontSize(22),
     marginBottom: 10,
   },
 });

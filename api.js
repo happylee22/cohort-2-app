@@ -1,7 +1,7 @@
 import { apiKey, baseUrl } from "./config";
 
-export const fetchData = async () => {
-  const url = `${baseUrl}/recipes/list?from=0&size=20&tags=under_30_minutes`;
+export const fetchData = async (link) => {
+  const url = `${baseUrl}/${link}`;
   const options = {
     method: "GET",
     headers: {
@@ -12,8 +12,9 @@ export const fetchData = async () => {
 
   try {
     const response = await fetch(url, options);
-    const result = await response.text();
-    console.log(result);
+    const result = await response.json();
+    // console.log(result);
+    return result;
   } catch (error) {
     console.error(error);
   }
