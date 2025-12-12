@@ -1,48 +1,54 @@
-import { Ratings } from "@/component/ratings";
-import { RecipeFooter } from "@/component/recipeFooter";
 import { scaleFontSize, trimText } from "@/utils";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Ratings } from "./ratings";
+import { RecipeFooter } from "./recipeFooter";
 const { width } = Dimensions.get("window");
+
 export const FeaturedRecipe = ({ recipe }) => {
   const boxWidth = (width - 40) * 0.8;
   const recipeName = trimText(recipe.name, 15);
   const authorName =
     recipe.credits && recipe.credits?.length > 0
       ? recipe.credits[0]?.name
-      : "unknown";
+      : "Unknown";
+
   const totalTime = recipe?.total_time_minutes;
-  const ratings = recipe.user_ratings?.score * 5;
+  const rating = recipe.user_ratings?.score * 5;
+  console.log(rating);
+
   return (
-    <View style={[styles.container, { width: boxWidth }]}>
-      <Text style={styles.title}>{recipeName}</Text>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={recipe.thumbnail_url}
-          contentFit="cover"
-          placeholder={require("@/assets/images/chef.png")}
+    <Link href={`/${recipe.id}`}>
+      <View style={[styles.container, { width: boxWidth }]}>
+        <Text style={styles.title}>{recipeName}</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={recipe.thumbnail_url}
+            placeholder={require("@/assets/images/chef.png")}
+            contentFit="cover"
+          />
+        </View>
+        <Ratings rating={rating} />
+        <RecipeFooter
+          authorName={authorName || "Unknown"}
+          totalTime={totalTime}
         />
       </View>
-      <Ratings rating={ratings} />
-      <RecipeFooter authorName={authorName} totalTime={totalTime} />
-    </View>
+    </Link>
   );
 };
-
 const imageWidth = width * 0.25;
 const styles = StyleSheet.create({
   container: {
-    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-    // position: "relative",
-    padding: 25,
-    paddingTop: 32,
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#fff",
+    padding: 15,
     borderRadius: 10,
-    // marginHorizontal: 8,
-    overflow: "visible",
   },
   title: {
-    fontSize: scaleFontSize(15),
+    fontSize: scaleFontSize(14),
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -52,8 +58,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: "hidden",
     position: "absolute",
-    right: 5,
-    top: imageWidth / -10,
+    right: 8,
+    top: imageWidth / -3,
   },
-  image: { width: "100%", height: "100%" },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
 });

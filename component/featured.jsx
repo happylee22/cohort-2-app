@@ -1,13 +1,13 @@
+import { useFetch } from "@/hooks/useFetch";
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { useFetch } from "../hooks/useFetch";
-import { FeaturedRecipies } from "./featured-recipies";
+import { FeaturedRecipes } from "./featured-recipies";
 import { Title } from "./title";
-
 export const Featured = () => {
-  const { fetching, data } = useFetch(
-    "recipes/list?from=0&size=5&tags=under_30_minutes"
-  );
+  const { fetching, data } = useFetch({
+    link: "recipes/list?from=0&size=20&tags=under_30_minutes",
+  });
+
   if (fetching) {
     return (
       <View style={styles.container}>
@@ -18,7 +18,7 @@ export const Featured = () => {
   return (
     <View style={styles.container}>
       <Title text="Featured Recipes" />
-      <FeaturedRecipies data={data} />
+      <FeaturedRecipes data={data} />
     </View>
   );
 };
@@ -26,6 +26,6 @@ export const Featured = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 50,
-    gap: 60,
+    gap: 20,
   },
 });

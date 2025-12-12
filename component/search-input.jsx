@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-export const SearchInput = ({ navigate }) => {
+
+export const SearchInput = ({ navigate, searchQuery, setSearchQuery }) => {
   const router = useRouter();
   const onPress = () => {
     router.push("/search");
@@ -17,7 +18,7 @@ export const SearchInput = ({ navigate }) => {
     return (
       <TouchableOpacity style={styles.container} onPress={onPress}>
         <Feather name="search" size={25} />
-        <Text style={styles.input}>Search Recipe </Text>
+        <Text style={styles.input}>Search Recipe</Text>
       </TouchableOpacity>
     );
   }
@@ -25,10 +26,17 @@ export const SearchInput = ({ navigate }) => {
     <View style={styles.container}>
       <Feather name="search" size={25} />
       <TextInput
+        placeholderTextColor={"black"}
         placeholder="Search Recipe"
         style={styles.input}
-        placeholderTextColor={"black"}
+        value={searchQuery}
+        onChangeText={(text) => setSearchQuery(text)}
       />
+      {searchQuery && (
+        <TouchableOpacity onPress={() => setSearchQuery("")}>
+          <Feather name="x" size={25} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -39,8 +47,8 @@ const styles = StyleSheet.create({
     gap: 10,
     borderWidth: 1,
     borderColor: colors.grey,
-    borderRadius: 8,
     padding: 10,
+    borderRadius: 8,
     marginTop: 20,
     alignItems: "center",
   },

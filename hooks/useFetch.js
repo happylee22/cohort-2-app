@@ -1,6 +1,7 @@
 import { fetchData } from "@/api";
 import { useEffect, useState } from "react";
-export const useFetch = (link) => {
+
+export const useFetch = ({ link }) => {
   const [fetching, setFetching] = useState(true);
   const [data, setData] = useState([]);
 
@@ -8,6 +9,7 @@ export const useFetch = (link) => {
     const onFetchData = async () => {
       try {
         const res = await fetchData(link);
+        // console.log(res);
 
         setData(res.results);
       } catch (error) {
@@ -17,6 +19,7 @@ export const useFetch = (link) => {
       }
     };
     onFetchData();
-  }, []);
+  }, [link]);
+
   return { fetching, data };
 };
