@@ -9,11 +9,10 @@ import { Wrapper } from "../component/wrapper";
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [query] = useDebounce(searchQuery, 500);
-  //   console.log(searchQuery);
 
   return (
     <Wrapper>
-      <Header title="search Recipies" showIcon />
+      <Header title="Search Recipes" showIcon />
       <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <SearchRecipes query={query} />
     </Wrapper>

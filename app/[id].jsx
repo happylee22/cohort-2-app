@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Header } from "../component/header";
+import { RecipeDetails } from "../component/recipe-details";
 import { Wrapper } from "../component/wrapper";
 
 const DetailsScreen = () => {
@@ -8,7 +9,7 @@ const DetailsScreen = () => {
   return (
     <Wrapper>
       <Header title={""} showIcon />
-      <Text style={{ fontSize: 30, fontWeight: "bold" }}>{id} </Text>
+      <RecipeDetails id={id} />
     </Wrapper>
   );
 };

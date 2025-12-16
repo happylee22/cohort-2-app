@@ -1,22 +1,31 @@
-import { colors } from "@/constant";
-import { useSelectedStore } from "@/store/use-selected";
-import { useEffect } from "react";
+import * as Haptics from "expo-haptics";
+import React, { useEffect, useRef } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { changeFirstLatterToUpperCase, scaleFontSize } from "../utils";
+
+import { colors } from "@/constant";
+import { useSelectedStore } from "@/store/use-selected";
 export const CategoriesHeader = ({ categories }) => {
   const { selected, setSelected } = useSelectedStore();
+  const flatListRef = useRef(null);
   useEffect(() => {
     if (categories && categories.length > 0 && !selected) {
       setSelected(categories[0]);
     }
   }, [selected, categories]);
+  const onPress = async (item, index) => {
+    setSelected(item);
+    flatListRef.current?.scrollToIndex({ index });
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
   return (
     <FlatList
+      ref={flatListRef}
       data={categories}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <TouchableOpacity
           style={[styles.button, item === selected && styles.selectButton]}
-          onPress={() => setSelected(item)}
+          onPress={() => onPress(item, index)}
         >
           <Text style={[styles.text, item === selected && styles.selectText]}>
             {changeFirstLatterToUpperCase(item)}
